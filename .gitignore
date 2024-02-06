@@ -1,0 +1,30 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+*.log
+*.logs
+*.seed
+*.db
+
+# Output
+output/
+
+# Environment variables
+.env
+
+# Temporary files
+*.class
+*.jar
+
+# IDE and Editor
+.idea/
+.vscode/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Configuration files
+.editorconfig
+.eslintrc

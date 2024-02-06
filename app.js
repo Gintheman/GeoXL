@@ -1,5 +1,5 @@
-const { geocodeAddress } = require('./service/geocoder.service');
-const { readAddressesFromExcel, writeGeocodeResultsToExcel } = require('./service/excel.service');
+const { geocodeAddress } = require('./app/service/geocoder.service');
+const { readAddressesFromExcel, writeGeocodeResultsToExcel } = require('./app/service/excel.service');
 
 async function processAddresses(filePath) {
   const addresses = readAddressesFromExcel(filePath);

@@ -1,19 +1,49 @@
-const { geocodeAddress } = require('./app/service/geocoder.service');
-const { readAddressesFromExcel, writeGeocodeResultsToExcel } = require('./app/service/excel.service');
+// const { geocodeAddressFromFile } = require('./app/service/geocoder.service');
+// const { readAddressesFromExcel, writeGeocodeResultsToExcel, writeInvalidAddressesToExcel } = require('./app/service/excel.service');
+// require('dotenv').config();
 
-async function processAddresses(filePath) {
-  const addresses = readAddressesFromExcel(filePath);
-  const geocodeResults = [];
+// const inputFilePath = process.env.INPUT_FILE_PATH;
+// const outputFilePath = process.env.OUTPUT_FILE_PATH;
+// const invalidFilePath = process.env.INVALID_FILE_PATH;
 
-  for (const address of addresses) {
-    const result = await geocodeAddress(address.address);
-    geocodeResults.push(result);
-  }
+// async function processAddresses(filePathInput, filePathOutput, filePathInvalid) {
+//   if (!filePathInput) {
+//     console.error('File path is not defined.');
+//     return;
+//   }
 
-  writeGeocodeResultsToExcel(filePath, geocodeResults);
-}
+//   const addresses = readAddressesFromExcel(filePathInput);
+//   const geocodeResults = [];
+//   const invalidAddresses = [];
 
-const filePath = 'addresses.xlsx';
-processAddresses(filePath)
-  .then(() => console.log('Geocoding process completed.'))
-  .catch(err => console.error(err));
+//   for (const [i, address] of addresses.entries()) {
+//     const result = await geocodeAddressFromFile(filePathInput);
+//     if (result && !result.error) {
+//       geocodeResults.push(result);
+//     } else {
+//       invalidAddresses.push(address);
+//     }
+//   }
+
+//   writeGeocodeResultsToExcel(filePathOutput, geocodeResults);
+//   writeInvalidAddressesToExcel(filePathInvalid, invalidAddresses);
+// }
+
+
+// processAddresses(filePathInput, filePathOutput, filePathInvalid)
+//   .then(() => console.log('Geocoding process completed.'))
+//   .catch(err => console.error(err));
+
+
+
+
+const readFile = require('./app/service/excel.service');
+const inputFilePath = process.env.INPUT_FILE_PATH;
+
+readFile(inputFilePath)
+  .then(addresses => {
+    console.log('Addresses:', addresses);
+  })
+  .catch(error => {
+    console.error('Error:', error.message);
+  });

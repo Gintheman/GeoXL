@@ -1,56 +1,30 @@
-// const NodeGeocoder = require('node-geocoder');
-// const XLSX = require('xlsx');
-// require('dotenv').config();
+testArr = [
+    'Агалакова  ул., 66А',
+    'Аношкина ул.,10  (паркинг)',
+    'Артиллерийский  пер., 6А',
+    'Генерала Мартынова ул., 14',
+    'Геологов ул., 7А п. Новосинеглазово',
+    'Героя России Родионова пр.-т, 12',
+    'Героя России Кислова наб., 27',
+    'Радистов  пер., 1',
+    'Доватора ул., ост. "Колющенко" ',
+    'Революции пл., 1/1',
+    'Ленина пр., 2М',
+    'перечечение ул. Доватора и ул. Степана Разина',
+    'пересечение ул. Кирова и пр. Победы',
+    'пересечение ул. Дзержинского и ул. Отечественная',
+    'пересечение ул. Черкасская и Свердловский пр.',
+    'пересечение ул. 3-го Интернационала и пр. Ленина',
+    'пересечение ул. Свободы и пр.Ленина ',
+    'пересечение Дзержинского и Отечественная',
+    ' 26 Бакинских Комиссаров ул., 63',
+    '8 Марта ул.,14А п. Новосинеглазово'
+  ];
 
-// const filePathInput = process.env.FILE_PATH_INPUT;
+  const addressesArray = testArr;
+  const key =
+  const app =  
 
+  async function adressDecoder(addressesArray) {
 
-
-// const options = {
-//   provider: process.env.GEOCODER_PROVIDER,
-//   httpAdapter: 'https',
-//   apiKey: process.env.GEOCODER_API_KEY,
-//   appId: process.env.GEOCODER_APP_ID,
-//     formatter: null,
-// };
-
-// const geocoder = NodeGeocoder(options);
-
-// async function geocodeAddressFromFile(filePathInput) {
-//   try {
-//     if (!filePathInput) {
-//       throw new Error('File path is not defined.');
-//     }
-
-//     const workbook = XLSX.readFile(filePathInput);
-//     if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
-//       throw new Error('No sheets found in the workbook.');
-//     }
-
-//     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-//     const addresses = XLSX.utils.sheet_to_json(worksheet, { header: 1, defval: '' });
-
-//     const geocodeResults = [];
-//     const invalidAddresses = [];
-
-//     for (const [i, addressRow] of addresses.entries()) {
-//       const address = addressRow[0];
-
-//       if (address) {
-//         const result = await geocoder.geocode(address);
-//         if (result.length > 0) {
-//           geocodeResults.push({ latitude: result[0].latitude, longitude: result[0].longitude, address });
-//         } else {
-//           invalidAddresses.push({ address });
-//         }
-//       }
-//     }
-
-//     return { geocodeResults, invalidAddresses };
-//   } catch (err) {
-//     console.error(`Error reading or geocoding addresses: ${err.message}`);
-//     return { error: err.message };
-//   }
-// }
-
-// module.exports = { geocodeAddressFromFile };
+  };

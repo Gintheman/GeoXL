@@ -1,22 +1,27 @@
-import { readFile } from './app/service/excel.service.mjs';
-import { getLocationData } from './app/service/geocoder.service.mjs';
-import { writeFile } from './app/service/excel.service.mjs';
+import { readFile, writeFile } from './app/service/excel.service.js';
+import { getLocationData } from './app/service/geocoder.service.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+const inputFile = process.env.INPUT_FILE;
+const outputFile = process.env.OUTPUT_FILE;
+const apiKey = process.env.GEOCODER_API_KEY;
 
 async function run() {
+  console.log(`Input file: ${process.env.INPUT_FILE}`);
+console.log(`Output file: ${process.env.OUTPUT_FILE}`);
+console.log(`API Key: ${process.env.GEOCODER_API_KEY}`);
+
   try {
-    const inputFile = process.env.INPUT_FILE;
     const addresses = await readFile(inputFile);
-    console.log(`Read file, ${addresses} now awailable`);
+    console.log(`Read file, ${addresses.length} addresses now available`);
 
     try {
-      const apiKey = process.env.GEOCODER_API_KEY;
       const geoData = await getLocationData(apiKey, addresses);
-      console.log(`Geocoded addresses at ${geoData}`);
+      console.log(`Geocoded addresses at ${JSON.stringify(geoData)}`);
 
       try {
-        const outputFile = process.env.OUTPUT_FILE;
         await writeFile(geoData, outputFile);
-
         console.log('Output.xlsx created.');
       } catch (writeError) {
         console.error('Writing error:', writeError.message);
@@ -28,6 +33,5 @@ async function run() {
     console.error('Reading error:', readError.message);
   }
 }
-
 
 run();

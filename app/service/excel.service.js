@@ -15,14 +15,16 @@ export async function readFile(inputFile) {
   }
 }
 
-export async function writeFile(geoData, outputFile) {
+export async function writeFile(geoData, outputFile, formattedDate) {
+  const outputFileName = `output-${formattedDate.replace(/[.:]/g, '-')}.xlsx`;
   const workbook = xlsx.utils.book_new();
   const validSheet = xlsx.utils.json_to_sheet(geoData.validArray);
   xlsx.utils.book_append_sheet(workbook, validSheet, 'Valid Addresses');
   const headers = [['address', 'latitude', 'longitude']];
   const validArrayData = geoData.validArray.map(item => [item.address, item.latitude, item.longitude]);
   xlsx.utils.sheet_add_aoa(validSheet, [headers, ...validArrayData]);
-  xlsx.writeFile(workbook, outputFile, { bookSST: true });
+  const newOutputFile = `${outputFile}/${outputFileName}`;
+  xlsx.writeFile(workbook, newOutputFile, { bookSST: true });
 
   const amount = geoData.invalidArray.length;
   const invalidAddressesList = geoData.invalidArray.map(item => item.address);

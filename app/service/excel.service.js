@@ -22,7 +22,6 @@ export async function writeFile(geoData, outputFile) {
   const headers = [['address', 'latitude', 'longitude']];
   const validArrayData = geoData.validArray.map(item => [item.address, item.latitude, item.longitude]);
   xlsx.utils.sheet_add_aoa(validSheet, [headers, ...validArrayData]);
-  xlsx.utils.book_append_sheet(workbook, validSheet, 'Valid Addresses');
   xlsx.writeFile(workbook, outputFile, { bookSST: true });
 
   const amount = geoData.invalidArray.length;

@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 export async function getLocationData(apiKey, addresses) {
   try {
     const geocodeUrl = "https://geocode.search.hereapi.com/v1/geocode";
-    let result = { validArray: [], invalidArray: [] };
+    let resultArray = { validArray: [], invalidArray: [] };
 
     for (const address of addresses) {
       const params = new URLSearchParams({
@@ -18,33 +18,31 @@ export async function getLocationData(apiKey, addresses) {
         if (response.ok) {
           if (data.items && data.items.length > 0) {
             const location = data.items[0].position;
-            result.validArray.push({
+            resultArray.validArray.push({
               address: address,
               latitude: location.lat,
               longitude: location.lng
             });
           } else {
-            result.invalidArray.push({
+            resultArray.invalidArray.push({
               address: address
             });
           }
         } else {
           console.error(`Geocoding error ${address}: ${data.title}`);
-          result.invalidArray.push({
+          resultArray.invalidArray.push({
             address: address
           });
         }
 
       } catch (error) {
         console.error(`Fetch/response error: ${error.message}`);
-        result.invalidArray.push({
+        resultArray.invalidArray.push({
           address: address
         });
       }
-    }
-
-    console.log(result);
-    return result;
+    };
+    return resultArray;
   } catch (error) {
     console.error('Error getting location data:', error.message);
     throw error;

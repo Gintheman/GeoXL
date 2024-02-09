@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "dotenv": "^16.4.1",
+    "node": "^21.6.1",
     "node-geocoder": "^4.2.0",
     "xlsx": "^0.18.5"
   },
+  "type": "module",
   "scripts": {
     "start": "node app.js"
   }

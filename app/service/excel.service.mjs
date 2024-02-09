@@ -1,6 +1,3 @@
-
-
-
 // const geoData = {
 //   validArray: [
 //     {
@@ -74,12 +71,13 @@
 
 const fs = require('fs').promises;
 const xlsx = require('xlsx');
-const path = require('path');
-const getLocationData = require(path.join(__dirname, 'app', 'service', 'geocoder.service.js'))
+const inputFile = process.env.INPUT_FILE;
+const outputFile = process.env.OUTPUT_FILE;
 
-async function readFile() {
+
+export async function readFile(inputFile) {
   try {
-    const inputFile = process.env.INPUT_FILE;
+    
     const fileData = await fs.readFile(inputFile);
     
     const workbook = xlsx.read(fileData, { type: 'buffer' });
@@ -95,31 +93,29 @@ async function readFile() {
   }
 }
 
-async function writeFile(apiKey, outputFilePath) {
+export async function writeFile(geoData, outputFile) {
   const workbook = xlsx.utils.book_new();
-  const sheetName = 'Addresses';
 
   // Создаем лист
-  const validSheet =  xlsx.utils.json_to_sheet(getLocationData.validArray);
+  const validSheet =  xlsx.utils.json_to_sheet(geoData.validArray);
+  xlsx.utils.book_append_sheet(workbook, validSheet, 'Valid Addresses');
 
   // Добавляем заголовки и данные в лист
   const headers = [['address', 'latitude', 'longitude']];
-  const validArrayData = getLocationData.validArray.map(item => [item.address, item.latitude, item.longitude]);
-  xlsx.utils.sheet_add_aoa(validSheet, headers.concat(validArrayData));
+  const validArrayData = geoData.validArray.map(item => [item.address, item.latitude, item.longitude]);
+  xlsx.utils.sheet_add_aoa(validSheet, [headers,...validArrayData]);
 
   // Сохраняем книгу в файл
-  xlsx.utils.book_append_sheet(workbook, validSheet, sheetName);
-  xlsx.writeFile(workbook, outputFilePath, { bookSST: true });
+  xlsx.utils.book_append_sheet(workbook, validSheet, 'Valid Addresses');
+  xlsx.writeFile(workbook, outputFile, { bookSST: true });
 
   // Выводим данные из invalidArray в консоль:
-  const amount = getLocationData.invalidArray.length;
+  const amount = geoData.invalidArray.length;
   const invalidAddressesList = getLocationData.invalidArray.map(item => item.address);
   console.log(`Total number of invalid addresses: ${amount}`);
   console.log(`Invalid Addresses List:`);
   console.log(invalidAddressesList);
 
 }
-
-module.exports = {readFile, writeFile};
 
 

@@ -1,4 +1,4 @@
-// const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 export async function getLocationData(apiKey, addresses) {
   try {
@@ -16,7 +16,6 @@ export async function getLocationData(apiKey, addresses) {
         const data = await response.json();
   
         if (response.ok) {
-          // Обрабатываем результат геокодирования (в данном случае, выводим координаты)
           if (data.items && data.items.length > 0) {
             const location = data.items[0].position;
             resultArray.validArray.push({
